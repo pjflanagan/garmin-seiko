@@ -1,0 +1,8 @@
+<layout id="WatchFace">
+    <drawable id="WatchFaceBackground" class="WatchFaceBackground">
+        <param name="backgroundColor">0x000000</param>
+        <param name="handColor">0xFFaaaa</param>
+        <param name="logoColor">0xFFFFFF</param>
+        <param name="radius">dc.getWidth() / 2</param>
+    </drawable>
+</layout>

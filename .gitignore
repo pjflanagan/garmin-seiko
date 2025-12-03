@@ -1,0 +1,5 @@
+.DS_Store
+bin/
+*/watchface.iq
+watch-faces/*
+!watch-faces/_development
