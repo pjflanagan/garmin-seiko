@@ -11,8 +11,11 @@ class WatchFaceBackground extends WatchUi.Drawable {
   private var _backgroundColor as Number;
   private var _shadowColor as Number;
   private var _handColor as Number;
+  private var _handDarkColor as Number;
   private var _logoColor as Number;
   private var _radius as Number;
+
+  private var _backgroundBitmap as WatchUi.Resource;
 
   public function initialize(
     params as
@@ -21,6 +24,7 @@ class WatchFaceBackground extends WatchUi.Drawable {
         :backgroundColor as Number,
         :shadowColor as Number,
         :handColor as Number,
+        :handDarkColor as Number,
         :logoColor as Number,
         :radius as Number,
       }
@@ -28,8 +32,11 @@ class WatchFaceBackground extends WatchUi.Drawable {
     _backgroundColor = params[:backgroundColor];
     _shadowColor = params[:shadowColor];
     _handColor = params[:handColor];
+    _handDarkColor = params[:handDarkColor];
     _logoColor = params[:logoColor];
     _radius = params[:radius];
+
+    _backgroundBitmap = WatchUi.loadResource(Rez.Drawables.Background);
 
     Drawable.initialize({
       :identifier => params[:identifier],
@@ -131,6 +138,19 @@ class WatchFaceBackground extends WatchUi.Drawable {
         [-0.08, -0.06],
       ]
     );
+    var minuteHandDarkPoints = WatchFaceHelpers.getHandPoints(
+      dc,
+      _radius,
+      0.2,
+      minuteAngle,
+      [
+        [0.0, -1.14],
+        [-0.028, -0.96],
+        [-0.12, -0.8],
+        [-0.038, -0.8],
+        [-0.08, -0.06],
+      ]
+    );
     var minuteHandDecorationPoints = WatchFaceHelpers.getHandPoints(
       dc,
       _radius,
@@ -144,6 +164,8 @@ class WatchFaceBackground extends WatchUi.Drawable {
     );
     dc.setColor(_handColor, Graphics.COLOR_TRANSPARENT);
     dc.fillPolygon(minuteHandPoints);
+    dc.setColor(_handDarkColor, Graphics.COLOR_TRANSPARENT);
+    dc.fillPolygon(minuteHandDarkPoints);
     dc.setColor(_shadowColor, Graphics.COLOR_TRANSPARENT);
     dc.setPenWidth(1);
     WatchFaceHelpers.drawPolygon(dc, minuteHandPoints);
@@ -215,6 +237,9 @@ class WatchFaceBackground extends WatchUi.Drawable {
     // set the background color then call to clear the screen
     dc.setColor(Graphics.COLOR_TRANSPARENT, _backgroundColor);
     dc.clear();
+
+    var offset = -(454 - 2 * _radius) / 2;
+    dc.drawBitmap(offset, offset, _backgroundBitmap);
 
     drawTickMarks(dc);
 

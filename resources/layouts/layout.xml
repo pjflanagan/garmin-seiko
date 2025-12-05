@@ -1,9 +1,11 @@
 <layout id="WatchFace">
+    <!-- CONSIDER: maybe just do this <bitmap id="Background" filename="background.png" x="center" y="center" /> -->
     <drawable id="WatchFaceBackground" class="WatchFaceBackground">
-        <param name="backgroundColor">0x0000AA</param>
+        <param name="backgroundColor">0x000000</param>
         <param name="shadowColor">0x550055</param>
-        <param name="handColor">0xAAFFFF</param>
-        <param name="logoColor">0xAAFFFF</param>
+        <param name="handColor">0x000000</param>
+        <param name="handDarkColor">0x555555</param>
+        <param name="logoColor">0xFF5555</param>
         <param name="radius">dc.getWidth() / 2</param>
     </drawable>
 </layout>
