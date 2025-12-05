@@ -8,11 +8,11 @@ import Toybox.System;
 import WatchFaceHelpers;
 
 class WatchFaceBackground extends WatchUi.Drawable {
-  private var _backgroundColor as Number;
+  private var _glowColor as Number;
   private var _shadowColor as Number;
   private var _handColor as Number;
   private var _handDarkColor as Number;
-  private var _logoColor as Number;
+  private var _tickColor as Number;
   private var _radius as Number;
 
   private var _backgroundBitmap as WatchUi.Resource;
@@ -21,19 +21,19 @@ class WatchFaceBackground extends WatchUi.Drawable {
     params as
       {
         :identifier as Object,
-        :backgroundColor as Number,
+        :glowColor as Number,
         :shadowColor as Number,
         :handColor as Number,
         :handDarkColor as Number,
-        :logoColor as Number,
+        :tickColor as Number,
         :radius as Number,
       }
   ) {
-    _backgroundColor = params[:backgroundColor];
+    _glowColor = params[:glowColor];
     _shadowColor = params[:shadowColor];
     _handColor = params[:handColor];
     _handDarkColor = params[:handDarkColor];
-    _logoColor = params[:logoColor];
+    _tickColor = params[:tickColor];
     _radius = params[:radius];
 
     _backgroundBitmap = WatchUi.loadResource(Rez.Drawables.Background);
@@ -44,7 +44,7 @@ class WatchFaceBackground extends WatchUi.Drawable {
   }
 
   private function drawTickMarks(dc as Graphics.Dc) {
-    dc.setColor(_logoColor, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(_tickColor, Graphics.COLOR_TRANSPARENT);
     dc.setPenWidth(8);
     for (var markAngle = 0; markAngle < 360; markAngle += 6) {
       dc.drawArc(
@@ -109,7 +109,7 @@ class WatchFaceBackground extends WatchUi.Drawable {
     dc.setColor(_shadowColor, Graphics.COLOR_TRANSPARENT);
     dc.setPenWidth(1);
     WatchFaceHelpers.drawPolygon(dc, hourHandPoints);
-    dc.setColor(_backgroundColor, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(_glowColor, Graphics.COLOR_TRANSPARENT);
     dc.fillPolygon(hourHandDecorationPoints);
   }
 
@@ -169,8 +169,7 @@ class WatchFaceBackground extends WatchUi.Drawable {
     dc.setColor(_shadowColor, Graphics.COLOR_TRANSPARENT);
     dc.setPenWidth(1);
     WatchFaceHelpers.drawPolygon(dc, minuteHandPoints);
-    dc.setColor(_logoColor, Graphics.COLOR_TRANSPARENT);
-    dc.setColor(_backgroundColor, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(_glowColor, Graphics.COLOR_TRANSPARENT);
     dc.fillPolygon(minuteHandDecorationPoints);
   }
 
@@ -224,7 +223,7 @@ class WatchFaceBackground extends WatchUi.Drawable {
     dc.fillCircle(_radius, _radius, 0.058 * _radius); // center circle
 
     // decoration
-    dc.setColor(_backgroundColor, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(_glowColor, Graphics.COLOR_TRANSPARENT);
     dc.fillCircle(_radius, _radius, 0.018 * _radius); // center circle
     dc.fillCircle(
       counterWeightCirclePoint[0],
@@ -235,7 +234,7 @@ class WatchFaceBackground extends WatchUi.Drawable {
 
   public function draw(dc) {
     // set the background color then call to clear the screen
-    dc.setColor(Graphics.COLOR_TRANSPARENT, _backgroundColor);
+    dc.setColor(Graphics.COLOR_TRANSPARENT, _glowColor);
     dc.clear();
 
     var offset = -(454 - 2 * _radius) / 2;
